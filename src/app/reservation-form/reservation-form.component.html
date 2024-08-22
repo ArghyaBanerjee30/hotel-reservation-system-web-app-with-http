@@ -1,0 +1,55 @@
+<app-home></app-home>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Create a new reservation</h1>
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="checkInDate" class="form-label">Check-In Date:</label>
+                <input type="date" id="checkInDate" formControlName="checkInDate" class="form-control" [min]="today">
+                <small *ngIf="rf.get('checkInDate')?.touched && rf.get('checkInDate')?.invalid" class="text-danger">
+                    Check-In Date is required.
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="checkOutDate" class="form-label">Check-Out Date:</label>
+                <input type="date" id="checkOutDate" formControlName="checkOutDate" class="form-control" [min]="today">
+                <small *ngIf="rf.get('checkOutDate')?.touched && rf.get('checkOutDate')?.invalid" class="text-danger">
+                    Check-Out Date is required.
+                </small>
+                <small *ngIf="rf.errors?.['checkInBeforeCheckOut']" class="text-danger">
+                    Check-in date must be before or on the same day as the check-out date.
+                </small>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="guestName" class="form-label">Guest Name:</label>
+                <input type="text" id="guestName" formControlName="guestName" class="form-control">
+                <small *ngIf="rf.get('guestName')?.touched && rf.get('guestName')?.invalid" class="text-danger">
+                    Guest Name is required.
+                </small>
+            </div>
+            <div class="col-md-6">
+                <label for="guestEmail" class="form-label">Guest Email:</label>
+                <input type="email" id="guestEmail" formControlName="guestEmail" class="form-control">
+                <small *ngIf="rf.get('guestEmail')?.touched && rf.get('guestEmail')?.invalid" class="text-danger">
+                    A valid Email is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="roomNumber" class="form-label">Room Number:</label>
+                <input type="number" id="roomNumber" formControlName="roomNumber" class="form-control">
+                <small *ngIf="rf.get('roomNumber')?.touched && rf.get('roomNumber')?.invalid" class="text-danger">
+                    Room Number is required and must be greater than 0.
+                </small>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="rf.invalid" class="btn btn-primary">Submit</button>
+    </form>
+</div>
